@@ -5,14 +5,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RomresbotService {
-	WebScraper scraper;
+	Romresbot bot;
 	
 	@Autowired
 	public RomresbotService() {
-		this.scraper = new WebScraper();
+		this.bot = new Romresbot(null);
 	}
 	
-	String getTitle() {
-		return scraper.openWebPage();
+	String login() {
+		bot.openWebPage("https://tp.uio.no/ntnu/rombestilling/");
+		return bot.login("username", "password");
 	}
 }

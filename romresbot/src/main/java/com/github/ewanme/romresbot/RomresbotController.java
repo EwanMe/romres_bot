@@ -17,7 +17,7 @@ public class RomresbotController {
 	}
 	
 	@GetMapping
-	public String helloWorld() {
-		return service.getTitle();
+	public String login() {
+		return service.login();
 	}
 }
