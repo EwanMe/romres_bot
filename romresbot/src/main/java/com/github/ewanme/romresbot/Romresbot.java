@@ -37,7 +37,7 @@ public class Romresbot {
 	 * @param password Feide password for login
 	 * @return
 	 */
-	public String login(String username, String password) {
+	public void login(String username, String password) {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, shortTimout);
 			WebElement institution = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("org_selector_filter")));
@@ -47,15 +47,9 @@ public class Romresbot {
 		    username_input.sendKeys(username);
 		    driver.findElement(By.id("password")).sendKeys(password);
 		    driver.findElement(By.className("button-primary")).click();
-		    
-		    String title = driver.getTitle();
-		    
-		    driver.quit();
-		    
-		    return title;
 		}
 		catch (TimeoutException e) {
-			return "Unable to log in because:\n" + e.getMessage();
+			throw new TimeoutException("WebElement not found due to timeout.\n" + e.getMessage());
 		}
 	}
 	
@@ -64,85 +58,92 @@ public class Romresbot {
 		reservation = new Reservation(location, date, duration, description, notes);
 	}
 	
-	public void reserveRoom() throws IllegalStateException {
+	public String reserveRoom() throws IllegalStateException {
 		if (reservation == null) {
 			throw new IllegalStateException("Reservation has not been created.");
 		}
 		
-		Calendar date = reservation.getDate();
-		int year = date.get(Calendar.YEAR);
-		int month = date.get(Calendar.MONTH);
-		int day = date.get(Calendar.DATE);
-		int hour = date.get(Calendar.HOUR);
-		int minute = date.get(Calendar.MINUTE);
+		try {
 		
-		WebDriverWait wait = new WebDriverWait(driver, shortTimout);
-		
-		// Input start time.
-		WebElement startTime = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("startblock")));
-		startTime.findElement(By.id("select2-start-container")).click();
-		
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("select2-search__field")))
-			.sendKeys(String.format("%d:%d", hour, minute));
-		
-		// Input end time.
-	    driver.findElement(By.id("durationblock")).click();
-	    WebElement endTimeInput = wait.until(
-	    		ExpectedConditions.visibilityOfElementLocated(By.className("select2-search__field")));
-	    endTimeInput.sendKeys(String.format("%d:%d", hour + reservation.getDuration(), minute), Keys.ENTER);
-	    
-	    // Input location of reservation.
-	    RoomLocation location = reservation.getLocation();
-
-	    if (!location.getArea().isBlank()) {
-	        driver.findElement(By.id("select2-area-container")).click();
-	        driver.findElement(By.className("select2-search__field")).sendKeys(location.getArea(), Keys.ENTER);
-	    }
-	    
-	    if (!location.getBulding().isBlank()) {
-	        driver.findElement(By.id("select2-building-container")).click();
-	        driver.findElement(By.className("select2-search__field")).sendKeys(location.getBulding(), Keys.ENTER);
-	    }
-	    
-	    if (!location.getType().isBlank()) {
-	        driver.findElement(By.id("select2-roomtype-container")).click();
-	        WebElement roomTypeInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("select2-search__field")));
-	        roomTypeInput.sendKeys(location.getType(), Keys.ENTER);
-	    }
-	    
-	    // Input minimum room size (number of persons)
-	    if (location.getSize() > 0) {
-	        driver.findElement(By.id("size")).sendKeys(location.getSize().toString());
-	    }
-	    
-	    // Input all specified equipment requirements.
-	    if (!location.getEquipment().isEmpty()) {
-	        for (String eq : location.getEquipment()) {
-	            driver.findElement(By.id("select2-new_equipment-container")).click();
-	            wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("select2-search__field"))).sendKeys(eq, Keys.ENTER);
-	        }
-	    }
-	    
-	    // Input date of reservation.
-	    WebElement datePicker = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker")));
-	    datePicker.clear();
-	    datePicker.sendKeys(String.format("%d.%d.%d", day, month, year));
-
-	    // Need to click the highlighted date in the calendar because the web site does not accept Enter for some reason.
-	    wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ui-datepicker-div"))).findElement(By.className("ui-state-active")).click();
-
-	    driver.findElement(By.id("preformsubmit")).click();
-
-	    selectRoom();
+			Calendar date = reservation.getDate();
+			int year = date.get(Calendar.YEAR);
+			int month = date.get(Calendar.MONTH);
+			int day = date.get(Calendar.DATE);
+			int hour = date.get(Calendar.HOUR);
+			int minute = date.get(Calendar.MINUTE);
+			
+			WebDriverWait wait = new WebDriverWait(driver, shortTimout);
+			
+			// Input start time.
+			WebElement startTime = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("startblock")));
+			startTime.findElement(By.id("select2-start-container")).click();
+			
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("select2-search__field")))
+				.sendKeys("Hello", String.format("%d:%d", hour, minute));
+			
+			// Input end time.
+		    driver.findElement(By.id("durationblock")).click();
+		    WebElement endTimeInput = wait.until(
+		    		ExpectedConditions.visibilityOfElementLocated(By.className("select2-search__field")));
+		    endTimeInput.sendKeys(String.format("%d:%d", hour + reservation.getDuration(), minute), Keys.ENTER);
+		    
+		    // Input location of reservation.
+		    RoomLocation location = reservation.getLocation();
+	
+		    if (!location.getArea().isBlank()) {
+		        driver.findElement(By.id("select2-area-container")).click();
+		        driver.findElement(By.className("select2-search__field")).sendKeys(location.getArea(), Keys.ENTER);
+		    }
+		    
+		    if (!location.getBulding().isBlank()) {
+		        driver.findElement(By.id("select2-building-container")).click();
+		        driver.findElement(By.className("select2-search__field")).sendKeys(location.getBulding(), Keys.ENTER);
+		    }
+		    
+		    if (!location.getType().isBlank()) {
+		        driver.findElement(By.id("select2-roomtype-container")).click();
+		        WebElement roomTypeInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("select2-search__field")));
+		        roomTypeInput.sendKeys(location.getType(), Keys.ENTER);
+		    }
+		    
+		    // Input minimum room size (number of persons)
+		    if (location.getSize() > 0) {
+		        driver.findElement(By.id("size")).sendKeys(location.getSize().toString());
+		    }
+		    
+		    // Input all specified equipment requirements.
+		    if (!location.getEquipment().isEmpty()) {
+		        for (String eq : location.getEquipment()) {
+		            driver.findElement(By.id("select2-new_equipment-container")).click();
+		            wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("select2-search__field"))).sendKeys(eq, Keys.ENTER);
+		        }
+		    }
+		    
+		    // Input date of reservation.
+		    WebElement datePicker = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("datepicker")));
+		    datePicker.clear();
+		    datePicker.sendKeys(String.format("%d.%d.%d", day, month, year));
+	
+		    // Need to click the highlighted date in the calendar because the web site does not accept Enter for some reason.
+		    wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("ui-datepicker-div"))).findElement(By.className("ui-state-active")).click();
+	
+		    driver.findElement(By.id("preformsubmit")).click();
+	
+		    return selectRoom();
+		}
+		catch (Exception e) {
+			//driver.close();
+			return "Error occured.\n" + e.getMessage();
+		}
 	}
 	
-	private void selectRoom() {
+	private String selectRoom() {
 		WebDriverWait wait = new WebDriverWait(driver, shortTimout);
 		
 		WebElement roomChoice = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("roomChoice")));
 
 	    if (roomChoice.getText() == "Ingen mulige rom") {
-	        System.out.println("No rooms found.");
+	        return "No rooms found.";
 	    }
 	    else {
 	        // Selects the first available room in the list of rooms.
@@ -160,6 +161,9 @@ public class Romresbot {
 	        	driver.findElement(By.id("notes")).sendKeys(reservation.getNotes());
 	            driver.findElement(By.className("button--primary-green")).click();
 	        }
+	        
+	        return driver.findElement(By.className("button--primary-green")).getText();
+	        // driver.findElement(By.className("button--primary-green")).click();
 	    }
 	}
 }

@@ -18,6 +18,6 @@ public class RomresbotController {
 	
 	@GetMapping
 	public String login() {
-		return service.login();
+		return service.reserveRoom();
 	}
 }

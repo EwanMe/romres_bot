@@ -32,7 +32,7 @@ public class Reservation {
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public String getNotes() {
 		return notes;
 	}
