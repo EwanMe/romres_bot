@@ -90,17 +90,17 @@ public class Romresbot {
 		    // Input location of reservation.
 		    RoomLocation location = reservation.getLocation();
 	
-		    if (!location.getArea().isBlank()) {
+		    if (location.getArea() != null && !location.getArea().isBlank()) {
 		        driver.findElement(By.id("select2-area-container")).click();
 		        driver.findElement(By.className("select2-search__field")).sendKeys(location.getArea(), Keys.ENTER);
 		    }
 		    
-		    if (!location.getBulding().isBlank()) {
+		    if (location.getBulding() != null && !location.getBulding().isBlank()) {
 		        driver.findElement(By.id("select2-building-container")).click();
 		        driver.findElement(By.className("select2-search__field")).sendKeys(location.getBulding(), Keys.ENTER);
 		    }
 		    
-		    if (!location.getType().isBlank()) {
+		    if (location.getType() != null && !location.getType().isBlank()) {
 		        driver.findElement(By.id("select2-roomtype-container")).click();
 		        WebElement roomTypeInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("select2-search__field")));
 		        roomTypeInput.sendKeys(location.getType(), Keys.ENTER);
@@ -112,7 +112,7 @@ public class Romresbot {
 		    }
 		    
 		    // Input all specified equipment requirements.
-		    if (!location.getEquipment().isEmpty()) {
+		    if (location.getEquipment() != null && !location.getEquipment().isEmpty()) {
 		        for (String eq : location.getEquipment()) {
 		            driver.findElement(By.id("select2-new_equipment-container")).click();
 		            wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("select2-search__field"))).sendKeys(eq, Keys.ENTER);
@@ -157,7 +157,7 @@ public class Romresbot {
 	        	ExpectedConditions.visibilityOfElementLocated(By.id("name"))).sendKeys(reservation.getDescription());
 
 	        // Provide optional notes
-	        if (!reservation.getNotes().isBlank()) {
+	        if (reservation.getNotes() != null && !reservation.getNotes().isBlank()) {
 	        	driver.findElement(By.id("notes")).sendKeys(reservation.getNotes());
 	            driver.findElement(By.className("button--primary-green")).click();
 	        }
