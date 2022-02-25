@@ -1,15 +1,15 @@
 package com.github.ewanme.romresbot;
 
-import java.util.Date;
+import java.util.Calendar;
 
 public class Reservation {
 	private RoomLocation location;
-	private Date date;
+	private Calendar date;
 	private Integer duration;
 	private String description;
 	private String notes;
 
-	public Reservation(RoomLocation location, Date date, int duration, String description, String notes) {
+	public Reservation(RoomLocation location, Calendar date, int duration, String description, String notes) {
 		this.location = location;
 		this.date = date;
 		this.duration = duration;
@@ -21,7 +21,7 @@ public class Reservation {
 		return location;
 	}
 
-	public Date getDate() {
+	public Calendar getDate() {
 		return date;
 	}
 

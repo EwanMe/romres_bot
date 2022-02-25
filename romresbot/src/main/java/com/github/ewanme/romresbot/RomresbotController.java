@@ -12,7 +12,7 @@ public class RomresbotController {
 	private final RomresbotService service;
 	
 	@Autowired
-	public RomresbotController(WebScraper scraper) {
+	public RomresbotController(RomresbotService service) {
 		this.service = new RomresbotService();
 	}
 	

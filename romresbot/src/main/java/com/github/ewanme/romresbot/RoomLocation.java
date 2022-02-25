@@ -5,12 +5,14 @@ import java.util.List;
 public class RoomLocation {
 	private String area;
 	private String building;
+	private String type;
 	private Integer size;
 	public List<String> equipment;
 	
-	public RoomLocation(String area, String building, int size, List<String> equipment) {
+	public RoomLocation(String area, String building, String type, int size, List<String> equipment) {
 		this.area = area;
 		this.building = building;
+		this.type = type;
 		this.size = size;
 		this.equipment = equipment;
 	}
@@ -21,6 +23,10 @@ public class RoomLocation {
 	
 	String getBulding() {
 		return building;
+	}
+	
+	String getType() {
+		return type;
 	}
 	
 	Integer getSize() {

@@ -9,7 +9,7 @@ public class RomresbotService {
 	
 	@Autowired
 	public RomresbotService() {
-		this.bot = new Romresbot(null);
+		this.bot = new Romresbot();
 	}
 	
 	String login() {
