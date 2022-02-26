@@ -1,16 +1,16 @@
-import axios from 'axios';
-import { useState } from 'react';
+import axios from "axios";
+import { useState } from "react";
 
 function App() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const reserve = (e) => {
     e.preventDefault();
 
     axios({
-      method: 'post',
-      url: 'http://localhost:8080/api/v1/romres',
+      method: "post",
+      url: "http://localhost:8080/api/v1/romres",
       auth: {
         username: username,
         password: password,
@@ -36,7 +36,7 @@ function App() {
         <label>
           Password:
           <input
-            type="text"
+            type="password"
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
