@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +25,17 @@ public class RomresbotService {
 		bot.login(username, password);
 	}
 	
+	public void createReservation(String area, String building, String type, int size, List<String> equipment, Calendar date, int duration, String description, String notes) {
+		bot.createReservation(area, building, type, size, equipment, date, duration, description, notes);
+	}
+	
 	public String reserveRoom(String username, String password) {
 		try {
 			login(username, password);
-			
-			Calendar date = new GregorianCalendar(2022, 3, 4, 10, 0);
-			bot.createReservation("Gløshaugen", null, null, 0, null, date, 1, "Kollokvie", null);
 			return bot.reserveRoom();
 		}
 		catch (Exception e) {
+			System.err.println(e.getMessage());
 			return e.getMessage();
 		}
 	}
