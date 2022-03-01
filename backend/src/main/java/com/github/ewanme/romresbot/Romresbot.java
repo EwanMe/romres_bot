@@ -53,6 +53,19 @@ public class Romresbot {
 		}
 	}
 	
+	/**
+	 * Creates a new Reservation object based on the input, replacing the local Reservation member.
+	 * 
+	 * @param area Area or building.
+	 * @param building Campus building.
+	 * @param type Room type.
+	 * @param size Number of people the room accommodates.
+	 * @param equipment The equipment present in the room.
+	 * @param date Date of reservation start.
+	 * @param duration Duration of reservation.
+	 * @param description Description of what the room will be used for.
+	 * @param notes Additional notes.
+	 */
 	public void createReservation(String area, String building, String type, int size, List<String> equipment, Calendar date, int duration, String description, String notes) {
 		RoomLocation location = new RoomLocation(area, building, type, size, equipment);
 		reservation = new Reservation(location, date, duration, description, notes);
