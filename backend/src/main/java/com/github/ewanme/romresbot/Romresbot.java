@@ -71,7 +71,7 @@ public class Romresbot {
 		reservation = new Reservation(location, date, duration, description, notes);
 	}
 	
-	public String reserveRoom() throws IllegalStateException {
+	public Boolean reserveRoom() throws IllegalStateException {
 		if (reservation == null) {
 			throw new IllegalStateException("Reservation has not been created.");
 		}
@@ -142,21 +142,24 @@ public class Romresbot {
 	
 		    driver.findElement(By.id("preformsubmit")).click();
 	
-		    return selectRoom();
+		    Boolean select =  selectRoom();
+		    System.out.println(select);
+		    return select;
 		}
 		catch (Exception e) {
 			//driver.close();
-			return "Error occured.\n" + e.getMessage();
+			System.err.println(e.getMessage());
+			return false;
 		}
 	}
 	
-	private String selectRoom() {
+	private Boolean selectRoom() {
 		WebDriverWait wait = new WebDriverWait(driver, shortTimout);
 		
 		WebElement roomChoice = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("roomChoice")));
 
 	    if (roomChoice.getText() == "Ingen mulige rom") {
-	        return "No rooms found.";
+	        return false;
 	    }
 	    else {
 	        // Selects the first available room in the list of rooms.
@@ -174,8 +177,9 @@ public class Romresbot {
 	        	driver.findElement(By.id("notes")).sendKeys(reservation.getNotes());
 	            driver.findElement(By.className("button--primary-green")).click();
 	        }
-	        
-	        return driver.findElement(By.className("button--primary-green")).getText();
+
+	        String confirmText = driver.findElement(By.className("button--primary-green")).getText();
+	        return confirmText.equals("Bekreft") ? true : false;
 	        // driver.findElement(By.className("button--primary-green")).click();
 	    }
 	}

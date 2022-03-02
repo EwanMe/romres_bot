@@ -29,14 +29,14 @@ public class RomresbotService {
 		bot.createReservation(area, building, type, size, equipment, date, duration, description, notes);
 	}
 	
-	public String reserveRoom(String username, String password) {
+	public Boolean reserveRoom(String username, String password) {
 		try {
 			login(username, password);
 			return bot.reserveRoom();
 		}
 		catch (Exception e) {
 			System.err.println(e.getMessage());
-			return e.getMessage();
+			return false;
 		}
 	}
 }

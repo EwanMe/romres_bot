@@ -68,9 +68,11 @@ public class RomresbotController {
 			String credentials = new String(credDecoded, StandardCharsets.UTF_8);
 			final String[] values = credentials.split(":", 2);
 
-			service.reserveRoom(values[0], values[1]);
+			if (service.reserveRoom(values[0], values[1])) {				
+				return new ResponseEntity<>("Room reserved!", HttpStatus.OK);
+			}
 			
-			return new ResponseEntity<>("Room reserved!", HttpStatus.OK);
+			return new ResponseEntity<>("Could not reserve room.", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 		return new ResponseEntity<>("Authorization not reckognized.", HttpStatus.UNAUTHORIZED);
