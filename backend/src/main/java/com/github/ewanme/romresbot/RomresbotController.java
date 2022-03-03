@@ -46,11 +46,13 @@ public class RomresbotController {
 		JsonParser parser = JsonParserFactory.getJsonParser();
 		Map<String, Object> data = parser.parseMap(body);
 
+		// Parse date and time as one Calendar object.
 		String[] dateStrings = ((String) data.get("date")).split("-");
 		String[] timeStrings = ((String) data.get("time")).split(":");
 		Calendar date = new GregorianCalendar(Integer.parseInt(dateStrings[0]), Integer.parseInt(dateStrings[0]),
 				Integer.parseInt(dateStrings[0]), Integer.parseInt(timeStrings[0]), Integer.parseInt(timeStrings[1]));
 		
+		// Parse rest of mappings.
 		String area = (String) data.get("area");
 		String building = (String) data.get("building");
 		String type = (String) data.get("type");
@@ -68,7 +70,7 @@ public class RomresbotController {
 			String credentials = new String(credDecoded, StandardCharsets.UTF_8);
 			final String[] values = credentials.split(":", 2);
 
-			if (service.reserveRoom(values[0], values[1])) {				
+			if (service.reserveRoom(values[0], values[1])) {			
 				return new ResponseEntity<>("Room reserved!", HttpStatus.OK);
 			}
 			

@@ -35,7 +35,6 @@ public class Romresbot {
 	 * 
 	 * @param username Feide user name for login
 	 * @param password Feide password for login
-	 * @return
 	 */
 	public void login(String username, String password) {
 		try {
@@ -43,8 +42,8 @@ public class Romresbot {
 			WebElement institution = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("org_selector_filter")));
 			institution.sendKeys("NTNU", Keys.ENTER, Keys.ENTER, Keys.ENTER);
 			
-			WebElement username_input = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
-		    username_input.sendKeys(username);
+			WebElement usernameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
+		    usernameInput.sendKeys(username);
 		    driver.findElement(By.id("password")).sendKeys(password);
 		    driver.findElement(By.className("button-primary")).click();
 		}
