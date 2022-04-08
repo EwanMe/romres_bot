@@ -7,7 +7,7 @@ public class RoomLocation {
 	private String building;
 	private String type;
 	private Integer size;
-	public List<String> equipment;
+	private List<String> equipment;
 	
 	public RoomLocation(String area, String building, String type, int size, List<String> equipment) {
 		this.area = area;
