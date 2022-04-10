@@ -2,6 +2,9 @@ package com.github.ewanme.romresbot;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+
+@Entity
 public class RoomLocation {
 	private String area;
 	private String building;
