@@ -1,0 +1,52 @@
+@startuml ReservationsDB
+
+hide empty methods
+
+left to right direction
+skinparam roundcorner 5
+skinparam linetype ortho
+skinparam shadowing false
+skinparam handwritten false
+
+skinparam class {
+    BackgroundColor white
+    ArrowColor #2688d4
+    BorderColor #2688d4
+}
+
+!define primary_key(x) <b><color:#b8861b><&key></color> x</b>
+!define foreign_key(x) <color:#aaaaaa><&key></color> x
+!define column(x) <color:#efefef><&media-record></color> x
+!define table(x) entity x << (T, white) >>
+
+table(User) {
+    primary_key(email): TEXT
+    column(encryptedPassword): TEXT
+}
+
+table(Reservation) {
+    primary_key(id): INTEGER
+    column(date): DATETIME
+    column(description): TEXT
+    column(duartion): REAL
+    column(notes): TEXT
+    column(roomType): TEXT
+    foreign_key(userEmail): TEXT
+    foreign_key(roomLocationId): INTEGER
+}
+
+table(RoomLocation) {
+    primary_key(id): INTEGER
+    column(area): TEXT
+    column(building): TEXT
+}
+
+table(Equipment) {
+    primary_key(name): TEXT
+}
+
+User |o--o{ Reservation
+Reservation ||--o{ RoomLocation
+Reservation }o--o{ Equipment
+
+@enduml
