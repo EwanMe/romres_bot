@@ -10,7 +10,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.bouncycastle.util.Arrays;
 
-public class AesEncryption {
+public class AESEncryption {
 	
 	private static SecretKeySpec secretKey;
 	private static byte[] key;

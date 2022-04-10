@@ -10,11 +10,11 @@ public class AesEncryptionTest {
 		String secretKey = "secretkey123";
 		
 		String originalMsg = "This is a secret message";
-		String encryptedMsg = AesEncryption.encrypt(originalMsg, secretKey);
+		String encryptedMsg = AESEncryption.encrypt(originalMsg, secretKey);
 		
 		assertNotEquals(originalMsg, encryptedMsg);
 		
-		String decryptedMsg = AesEncryption.decrypt(encryptedMsg, secretKey);
+		String decryptedMsg = AESEncryption.decrypt(encryptedMsg, secretKey);
 		
 		assertEquals(originalMsg, decryptedMsg);
 		
