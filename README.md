@@ -4,6 +4,6 @@ This is a tool for setting up scheduled room reservations on the Norwegian Unive
 
 ## Storage
 
-Reservations are stored within a SQLite database to retrieve from when the time to make the reservation comes. Note that when a user requests a scheduling, their password is stored **encrypted** in the database. **_No hashing_** is done to the password, since it would be impossible to enter the password into RomRes to complete the reservation that way. Therefore, users of this system should host this application themselves, or know and trust the provider of the service they are using.
+Reservations are stored within an SQLite database to retrieve from when the time to make the reservation comes. Note that when a user requests a scheduling, their password is stored **encrypted** in the database. **_No hashing_** is done to the password, since it would be impossible to enter the password into RomRes to complete the reservation that way. Therefore, users of this system should host this application themselves, or know and trust the provider of the service they are using.
 
 ![Database diagram](docs/target/ReservationsDB.png)
