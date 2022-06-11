@@ -1,4 +1,4 @@
-package com.github.ewanme.romresbot;
+package com.github.ewanme.romresbot.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,8 +8,16 @@ public class User {
 	
 	@Id
 	private String email;
+	
 	private String encryptedPassword;
 	
+	public User() {}
+	
+	public User(String email, String encryptedPassword) {
+		this.email = email;
+		this.encryptedPassword = encryptedPassword;
+	}
+
 	public String getEmail() {
 		return email;
 	}

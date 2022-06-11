@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import com.github.ewanme.romresbot.entity.Equipment;
+import com.github.ewanme.romresbot.entity.LocationFilter;
 
 public class RoomLocationTest {
 	
@@ -15,15 +18,17 @@ public class RoomLocationTest {
 		String building = "Kjelhuset";
 		String roomType = "Grupperom";
 		int size = 1;
-		List<String> equipment = new ArrayList<String>(Arrays.asList("DVD-spiller", "Projektor"));
+		List<Equipment> equipment = new ArrayList<Equipment>();
+		equipment.add(new Equipment("DVD-spiller"));
+		equipment.add(new Equipment("Projektor"));
 		
 		
-		RoomLocation loc = new RoomLocation(area, building, roomType, size, equipment);
+		LocationFilter loc = new LocationFilter(area, building, roomType, size, equipment);
 		
 		assertEquals(area, loc.getArea());
 		assertEquals(building, loc.getBulding());
 		assertEquals(roomType, loc.getType());
-		assertEquals(size, loc.getSize());
+		assertEquals(size, loc.getRoomSize());
 		assertEquals(equipment, loc.getEquipment());
 	}
 

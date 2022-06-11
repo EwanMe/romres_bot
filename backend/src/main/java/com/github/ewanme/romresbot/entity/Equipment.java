@@ -1,13 +1,15 @@
-package com.github.ewanme.romresbot;
+package com.github.ewanme.romresbot.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 
-@Entity
+@Embeddable
 public class Equipment {
 	
-	@Id
 	private String name;
+
+	public Equipment(String name) {
+		this.name = name;
+	}
 
 	public String getName() {
 		return name;

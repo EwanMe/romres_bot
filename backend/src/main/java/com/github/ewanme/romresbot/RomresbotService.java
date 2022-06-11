@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.ewanme.romresbot.entity.Equipment;
+
 @Service
 public class RomresbotService {
 	Romresbot bot;
@@ -20,7 +22,7 @@ public class RomresbotService {
 		bot.login(username, password);
 	}
 	
-	public void createReservation(String area, String building, String type, int size, List<String> equipment, Calendar date, int duration, String description, String notes) {
+	public void createReservation(String area, String building, String type, int size, List<Equipment> equipment, Calendar date, int duration, String description, String notes) {
 		bot.createReservation(area, building, type, size, equipment, date, duration, description, notes);
 	}
 	

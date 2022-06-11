@@ -11,6 +11,10 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import com.github.ewanme.romresbot.entity.Equipment;
+import com.github.ewanme.romresbot.entity.LocationFilter;
+import com.github.ewanme.romresbot.entity.Reservation;
+
 public class Romresbot {
 	private Reservation reservation = null;
 	private FirefoxDriver driver;
@@ -65,8 +69,8 @@ public class Romresbot {
 	 * @param description Description of what the room will be used for.
 	 * @param notes Additional notes.
 	 */
-	public void createReservation(String area, String building, String type, int size, List<String> equipment, Calendar date, int duration, String description, String notes) {
-		RoomLocation location = new RoomLocation(area, building, type, size, equipment);
+	public void createReservation(String area, String building, String type, int size, List<Equipment> equipment, Calendar date, int duration, String description, String notes) {
+		LocationFilter location = new LocationFilter(area, building, type, size, equipment);
 		reservation = new Reservation(location, date, duration, description, notes);
 	}
 	
@@ -100,7 +104,7 @@ public class Romresbot {
 		    endTimeInput.sendKeys(String.format("%d:%d", hour + reservation.getDuration(), minute), Keys.ENTER);
 		    
 		    // Input location of reservation.
-		    RoomLocation location = reservation.getLocation();
+		    LocationFilter location = reservation.getLocation();
 	
 		    if (location.getArea() != null && !location.getArea().isBlank()) {
 		        driver.findElement(By.id("select2-area-container")).click();
@@ -119,15 +123,15 @@ public class Romresbot {
 		    }
 		    
 		    // Input minimum room size (number of persons)
-		    if (location.getSize() > 0) {
-		        driver.findElement(By.id("size")).sendKeys(location.getSize().toString());
+		    if (location.getRoomSize() > 0) {
+		        driver.findElement(By.id("size")).sendKeys(location.getRoomSize().toString());
 		    }
 		    
 		    // Input all specified equipment requirements.
 		    if (location.getEquipment() != null && !location.getEquipment().isEmpty()) {
-		        for (String eq : location.getEquipment()) {
+		        for (Equipment eq : location.getEquipment()) {
 		            driver.findElement(By.id("select2-new_equipment-container")).click();
-		            wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("select2-search__field"))).sendKeys(eq, Keys.ENTER);
+		            wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("select2-search__field"))).sendKeys(eq.getName(), Keys.ENTER);
 		        }
 		    }
 		    

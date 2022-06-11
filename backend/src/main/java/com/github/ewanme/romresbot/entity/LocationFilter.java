@@ -1,42 +1,61 @@
-package com.github.ewanme.romresbot;
+package com.github.ewanme.romresbot.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
-public class RoomLocation {
-	private String area;
-	private String building;
-	private String type;
-	private Integer size;
-	private List<String> equipment;
+public class LocationFilter implements Serializable {
 	
-	public RoomLocation(String area, String building, String type, int size, List<String> equipment) {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
+	private Integer id;
+	
+	private String area;
+	
+	private String building;
+	
+	private String type;
+	
+	private Integer roomSize;
+	
+	@ElementCollection
+	private List<Equipment> equipment;
+	
+	public LocationFilter() {}
+	
+	public LocationFilter(String area, String building, String type, int size, List<Equipment> equipment) {
 		this.area = area;
 		this.building = building;
 		this.type = type;
-		this.size = size;
+		this.roomSize = size;
 		this.equipment = equipment;
 	}
 	
-	String getArea() {
+	public String getArea() {
 		return area;
 	}
 	
-	String getBulding() {
+	public String getBulding() {
 		return building;
 	}
 	
-	String getType() {
+	public String getType() {
 		return type;
 	}
 	
-	Integer getSize() {
-		return size;
+	public Integer getRoomSize() {
+		return roomSize;
 	}
 	
-	List<String> getEquipment() {
+	public List<Equipment> getEquipment() {
 		return equipment;
 	}
 }

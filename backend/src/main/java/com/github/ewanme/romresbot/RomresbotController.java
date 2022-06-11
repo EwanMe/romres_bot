@@ -13,17 +13,25 @@ import org.springframework.boot.json.JsonParserFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.ewanme.romresbot.entity.User;
+import com.github.ewanme.romresbot.repository.UserRepository;
+
 @RestController
 @RequestMapping(path = "api/v1/romres")
 public class RomresbotController {
 
 	private final RomresbotService service;
+	
+	@Autowired
+	private UserRepository userRepo;
 
 	@Autowired
 	public RomresbotController(RomresbotService service) {
@@ -57,7 +65,7 @@ public class RomresbotController {
 		String description = (String) data.get("description");
 		String notes = (String) data.get("notes");
 
-		service.createReservation(area, building, type, size, equipment, date, duration, description, notes);
+		// TODO: service.createReservation(area, building, type, size, equipment, date, duration, description, notes);
 
 		if (auth != null && auth.toLowerCase().startsWith("basic")) {
 			String base64Credentials = auth.substring("Basic".length()).trim();
@@ -73,5 +81,10 @@ public class RomresbotController {
 		}
 
 		return new ResponseEntity<>("Authorization not reckognized.", HttpStatus.UNAUTHORIZED);
+	}
+	
+	@GetMapping("/user/{email}/{password}")
+	public void addUser(@PathVariable String email, @PathVariable String password) {
+		userRepo.save(new User(email, password));
 	}
 }
